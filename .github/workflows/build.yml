@@ -40,13 +40,13 @@ jobs:
         ./gradlew check &&
         ./gradlew publishToMavenLocal
 
-        cd ../Task-Tracker-Usecases &&
+        cd ../Task-Tracker-Entities-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
 
-        cd ../Task-Tracker-Entities-Impl &&
+        cd ../Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
