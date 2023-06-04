@@ -5,6 +5,7 @@ import com.garbereder.tasktracker.entities.TaskCollection
 import com.garbereder.tasktracker.usecases.UseCase
 import io.mockative.*
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -18,7 +19,8 @@ class LoadTasksTests {
         given(reader).invocation { read() }
             .then { collection }
 
-        LoadTasks(reader).invoke()
+        val col = LoadTasks(reader).invoke()
+        assertEquals(collection, col)
 
         verify(reader).invocation { read() }
             .wasInvoked(exactly = once)

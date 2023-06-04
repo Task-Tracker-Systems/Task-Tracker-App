@@ -1,5 +1,5 @@
 package com.garbereder.tasktracker.usecases
 
-interface UseCase {
-    fun invoke()
+interface UseCase<out T> {
+    fun invoke(): T
 }
