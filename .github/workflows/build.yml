@@ -45,3 +45,9 @@ jobs:
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
+
+        cd ../Task-Tracker-Entities-Impl &&
+        ln -s ../gradle &&
+        ln -s ../gradlew &&
+        ./gradlew check &&
+        ./gradlew publishToMavenLocal
