@@ -16,7 +16,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
-                implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
             }
         }
     }
