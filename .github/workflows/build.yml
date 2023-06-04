@@ -31,8 +31,4 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     - name: Test with Gradle
-      run: chmod +x gradlew
-      run: cd Task-Tracker-Entities
-      run: ln -s ../gradle
-      run: ln -s ../gradlew
-      run: ./gradlew check
+      run: chmod +x gradlew && cd Task-Tracker-Entities && ln -s ../gradle && ln -s ../gradlew && ./gradlew check
