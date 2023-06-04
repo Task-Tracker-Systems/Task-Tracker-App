@@ -33,13 +33,13 @@ jobs:
     - name: Build with Gradle
       run: |
         chmod +x gradlew &&
-      # Entities
+        
         cd Task-Tracker-Entities &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
-      # Usecases
+
         cd ../Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
