@@ -31,5 +31,5 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: test
         build-root-directory: ./Task-Tracker-Entities
+      run: ./gradlew test
