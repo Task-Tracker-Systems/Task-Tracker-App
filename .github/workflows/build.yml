@@ -57,3 +57,7 @@ jobs:
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew assembleDist
+    - uses: actions/upload-artifact@v3
+      with:
+        name: distribution
+        path: build/distributions/*.zip
