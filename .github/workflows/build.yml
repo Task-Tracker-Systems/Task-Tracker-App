@@ -34,29 +34,29 @@ jobs:
       run: |
         chmod +x gradlew &&
         
-        cd ~/Task-Tracker-Entities &&
+        cd Task-Tracker-Entities &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
 
-        cd ~/Task-Tracker-Entities-Impl &&
+        cd ../Task-Tracker-Entities-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
 
-        cd ~/Task-Tracker-Usecases &&
+        cd ../Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal &&
 
-        cd ~/Task-Tracker-CLI &&
+        cd ../Task-Tracker-CLI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew assembleDist
     - uses: actions/upload-artifact@v3
       with:
-        path: ~/Task-Tracker-CLI/build/distributions/*.zip
+        path: ./Task-Tracker-CLI/build/distributions/*.zip
