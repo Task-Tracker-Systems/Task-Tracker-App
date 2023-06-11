@@ -59,4 +59,5 @@ jobs:
         ./gradlew assembleDist
     - uses: actions/upload-artifact@v3
       with:
+        name: distribution
         path: ./Task-Tracker-CLI/build/distributions/*.zip
