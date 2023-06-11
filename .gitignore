@@ -1,5 +1,9 @@
-**/build/**
-**/.gradle/**
-**/local.properties/**
-**/.idea/**
-**/kotlin-js-store/**
+build
+.gradle
+local.properties
+.idea
+kotlin-js-store
+
+gradle
+gradlew
+gradlew.bat
