@@ -6,6 +6,18 @@
 version: 2
 updates:
   - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/Task-Tracker-CLI" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/Task-Tracker-Entities" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/Task-Tracker-Entities-Impl" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/Task-Tracker-Usecases" # Location of package manifests
     schedule:
       interval: "weekly"
