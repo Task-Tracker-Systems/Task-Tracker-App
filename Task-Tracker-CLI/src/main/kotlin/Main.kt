@@ -1,3 +1,4 @@
+
 import com.garbereder.tasktracker.entities.*
 import com.garbereder.tasktracker.usecases.tasks.*
 import com.github.kinquirer.KInquirer
@@ -9,12 +10,12 @@ import kotlin.system.exitProcess
 fun main() {
     println("Welcome to Task-Tracker-CLI")
     val tasks = LoadTasks(object : TaskCollectionReader {
-        override fun read(): TaskCollection {
-            return TaskCollectionImpl()
-        }
+        override fun read(): TaskCollection = TaskCollectionImpl()
     }).invoke()
 
-    val activities: ActivityCollection = ActivityCollectionImpl()
+    val activities = LoadActivities(object : ActivityCollectionReader {
+        override fun read(): ActivityCollection = ActivityCollectionImpl()
+    }).invoke()
 
     val addTask: () -> Unit = {
         val taskName = KInquirer.promptInput("Task name:")
