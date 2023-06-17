@@ -52,6 +52,12 @@ jobs:
         ./gradlew check &&
         ./gradlew publishToMavenLocal &&
 
+        cd ../Task-Tracker-Usecases-SQLite-Impl &&
+        ln -s ../gradle &&
+        ln -s ../gradlew &&
+        ./gradlew check &&
+        ./gradlew publishToMavenLocal &&
+
         cd ../Task-Tracker-CLI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
