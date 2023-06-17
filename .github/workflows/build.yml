@@ -34,35 +34,46 @@ jobs:
       run: |
         chmod +x gradlew &&
         
+        echo "Starting Task-Tracker-Entities" &&
         cd Task-Tracker-Entities &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal
+        ./gradlew publishToMavenLocal &&
+        echo "Finsihed Task-Tracker-Entities" &&
 
+        echo "Starting Task-Tracker-Entities-Impl" &&
         cd ../Task-Tracker-Entities-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal
+        ./gradlew publishToMavenLocal &&
+        echo "Finsihed Task-Tracker-Entities-Impl" &&
 
+        echo "Starting Task-Tracker-Usecases" &&
         cd ../Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal &&
+        echo "Finished Task-Tracker-Usecases" &&
 
+        echo "Starting Task-Tracker-Usecases-SQLite-Impl" &&
         cd ../Task-Tracker-Usecases-SQLite-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal &&
+        echo "Finsihed Task-Tracker-Usecases-SQLite-Impl" &&
 
+        echo "Starting Task-Tracker-CLI" &&
         cd ../Task-Tracker-CLI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew assembleDist
+        ./gradlew assembleDist &&
+        echo "Finsihed Task-Tracker-CLI"
+
     - uses: actions/upload-artifact@v3
       with:
         name: distribution
