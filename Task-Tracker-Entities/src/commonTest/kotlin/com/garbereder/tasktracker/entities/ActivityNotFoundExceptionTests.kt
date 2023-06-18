@@ -13,9 +13,8 @@ class ActivityNotFoundExceptionTests {
         val task = Task("TaskId", "TaskName")
         val start = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val end = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-        val activity = Activity("1", start, end, task )
+        val activity = Activity("1", start, end, task)
         val ex = ActivityNotFoundException(activity)
-        assertEquals("Could not find activity: Activity(id=1, start=${start}, end=${end}, task=${task})", ex.message)
+        assertEquals("Could not find activity: Activity(id=1, start=$start, end=$end, task=$task)", ex.message)
     }
-
 }

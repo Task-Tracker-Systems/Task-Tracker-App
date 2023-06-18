@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform") version "1.8.22"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
     id("maven-publish")
 }
 
@@ -42,7 +43,6 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
     sourceSets {
         val commonMain by getting
         val commonTest by getting {

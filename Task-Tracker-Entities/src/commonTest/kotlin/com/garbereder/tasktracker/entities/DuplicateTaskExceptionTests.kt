@@ -11,5 +11,4 @@ class DuplicateTaskExceptionTests {
         val ex = DuplicateTaskException(task)
         assertEquals("Could not add duplicate task: Task(id=TaskId, name=TaskName)", ex.message)
     }
-
 }
