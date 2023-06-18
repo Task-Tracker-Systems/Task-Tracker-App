@@ -2,15 +2,19 @@ package com.garbereder.tasktracker.usecases.tasks
 
 import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.entities.TaskCollection
-import com.garbereder.tasktracker.entities.TaskNotFoundException
-import io.mockative.*
+import io.mockative.Mock
+import io.mockative.classOf
+import io.mockative.given
+import io.mockative.mock
+import io.mockative.once
+import io.mockative.thenDoNothing
+import io.mockative.verify
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class RemoveTaskTest {
     @Mock
     val collection = mock(classOf<TaskCollection>())
+
     @Test
     fun invoke_noInput_callsThrough() {
         val task = Task("TaskId", "TaskName")
