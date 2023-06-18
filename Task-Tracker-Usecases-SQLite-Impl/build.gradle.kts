@@ -1,13 +1,23 @@
 plugins {
     kotlin("multiplatform") version "1.8.22"
     id("maven-publish")
+    id("app.cash.sqldelight") version "2.0.0-rc01"
 }
 
-group = "com.garbereder.tasktracker.entities"
+group = "com.garbereder.tasktracker.usecases.sqlite"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    mavenLocal()
     mavenCentral()
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.garbereder.tasktracker.usecases.sqlite")
+        }
+    }
 }
 
 kotlin {
@@ -16,14 +26,6 @@ kotlin {
         withJava()
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
-        }
-    }
-    js(IR) {
-        nodejs()
-        compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions.freeCompilerArgs.add("-Xir-minimized-member-names=false")
-            }
         }
     }
     val hostOs = System.getProperty("os.name")
@@ -39,7 +41,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
+                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+                implementation("com.garbereder.tasktracker.entities-impl:Task-Tracker-Entities-Impl:1.0-SNAPSHOT")
             }
         }
         val commonTest by getting {
@@ -47,11 +51,17 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jvmMain by getting
+        val jvmMain by getting{
+            dependencies {
+                implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
+            }
+        }
         val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
-        val nativeMain by getting
+        val nativeMain by getting {
+            dependencies {
+                implementation("app.cash.sqldelight:native-driver:2.0.0-rc01")
+            }
+        }
         val nativeTest by getting
     }
 }

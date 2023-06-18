@@ -30,29 +30,39 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-    - name: Build with Gradle
+    - name: Set Gradle executable
+      run: chmod +x gradlew
+    - name: Compile Task-Tracker-Entities
       run: |
-        chmod +x gradlew &&
-        
         cd Task-Tracker-Entities &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
-
-        cd ../Task-Tracker-Entities-Impl &&
+    - name: Compile Task-Tracker-Entities-Impl
+      run: |
+        cd Task-Tracker-Entities-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
-
-        cd ../Task-Tracker-Usecases &&
+    - name: Compile Task-Tracker-Usecases
+      run: |
+        cd Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal &&
-
-        cd ../Task-Tracker-CLI &&
+        ./gradlew publishToMavenLocal
+    - name: Compile Task-Tracker-Usecases-SQLite-Impl
+      run: |
+        cd Task-Tracker-Usecases-SQLite-Impl &&
+        ln -s ../gradle &&
+        ln -s ../gradlew &&
+        ./gradlew check &&
+        ./gradlew publishToMavenLocal
+    - name: Compile Task-Tracker-Usecases-CLI
+      run: |
+        cd Task-Tracker-CLI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
