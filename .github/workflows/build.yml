@@ -30,50 +30,43 @@ jobs:
         distribution: 'temurin'
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-    - name: Build with Gradle
+    - name: Set Gradle executable
+      run: chmod +x gradlew
+    - name: Compile Task-Tracker-Entities
       run: |
-        chmod +x gradlew &&
-        
-        echo "Starting Task-Tracker-Entities" &&
         cd Task-Tracker-Entities &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal &&
-        echo "Finsihed Task-Tracker-Entities" &&
-
-        echo "Starting Task-Tracker-Entities-Impl" &&
-        cd ../Task-Tracker-Entities-Impl &&
+        ./gradlew publishToMavenLocal
+    - name: Compile Task-Tracker-Entities-Impl
+      run: |
+        cd Task-Tracker-Entities-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal &&
-        echo "Finsihed Task-Tracker-Entities-Impl" &&
-
-        echo "Starting Task-Tracker-Usecases" &&
-        cd ../Task-Tracker-Usecases &&
+        ./gradlew publishToMavenLocal
+    - name: Compile Task-Tracker-Usecases
+      run: |
+        cd Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal &&
-        echo "Finished Task-Tracker-Usecases" &&
-
-        echo "Starting Task-Tracker-Usecases-SQLite-Impl" &&
-        cd ../Task-Tracker-Usecases-SQLite-Impl &&
+        ./gradlew publishToMavenLocal
+    - name: Compile Task-Tracker-Usecases-SQLite-Impl
+      run: |
+        cd Task-Tracker-Usecases-SQLite-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew publishToMavenLocal &&
-        echo "Finsihed Task-Tracker-Usecases-SQLite-Impl" &&
-
-        echo "Starting Task-Tracker-CLI" &&
-        cd ../Task-Tracker-CLI &&
+        ./gradlew publishToMavenLocal
+    - name: Compile Task-Tracker-Usecases-CLI
+      run: |
+        cd Task-Tracker-CLI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check &&
-        ./gradlew assembleDist &&
-        echo "Finsihed Task-Tracker-CLI"
-
+        ./gradlew assembleDist
     - uses: actions/upload-artifact@v3
       with:
         name: distribution
