@@ -13,19 +13,6 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation("io.mockative:mockative:1.4.1")
-            }
-        }
-    }
     jvm {
         jvmToolchain(17)
         withJava()
@@ -52,9 +39,15 @@ kotlin {
 
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+            }
+        }
         val commonTest by getting {
             dependencies {
+                implementation("io.mockative:mockative:1.4.1")
                 implementation(kotlin("test"))
             }
         }
