@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.8.22"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
     application
 }
 
@@ -9,7 +10,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenLocal()
     mavenCentral()
-    maven ("https://jitpack.io")
+    maven("https://jitpack.io")
 }
 
 dependencies {

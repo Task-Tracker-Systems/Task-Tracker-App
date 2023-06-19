@@ -1,19 +1,22 @@
 package com.garbereder.tasktracker.usecases.tasks
 
-import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.entities.TaskCollection
-import com.garbereder.tasktracker.usecases.UseCase
-import io.mockative.*
+import io.mockative.Mock
+import io.mockative.classOf
+import io.mockative.given
+import io.mockative.mock
+import io.mockative.once
+import io.mockative.verify
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 class LoadTasksTests {
     @Mock
     val reader = mock(classOf<TaskCollectionReader>())
+
     @Mock
     val collection = mock(classOf<TaskCollection>())
+
     @Test
     fun invoke_noInput_callsThrough() {
         given(reader).invocation { read() }
@@ -25,5 +28,4 @@ class LoadTasksTests {
         verify(reader).invocation { read() }
             .wasInvoked(exactly = once)
     }
-
 }

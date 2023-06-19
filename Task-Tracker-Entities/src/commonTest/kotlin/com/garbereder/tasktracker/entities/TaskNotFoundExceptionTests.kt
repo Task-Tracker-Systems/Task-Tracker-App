@@ -11,5 +11,4 @@ class TaskNotFoundExceptionTests {
         val ex = TaskNotFoundException(task)
         assertEquals("Could not find task: Task(id=TaskId, name=TaskName)", ex.message)
     }
-
 }

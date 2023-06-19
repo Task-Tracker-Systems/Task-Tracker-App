@@ -12,17 +12,17 @@ class StopActivityTest {
 
     @Test
     fun invoke_noInput_setStart() {
-        val task = Task("1","TaskName")
+        val task = Task("1", "TaskName")
         val before = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val activity = Activity("1", before, null, task)
         val activity2 = StopActivity(activity).invoke()
         val after = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
-        assertTrue( activity.end === null )
+        assertTrue(activity.end === null)
 
-        assertTrue( activity2.id == "1" )
-        assertTrue( activity2.start !== activity2.end )
-        assertTrue( activity2.end!! >= before )
-        assertTrue( activity2.end!! <= after )
+        assertTrue(activity2.id == "1")
+        assertTrue(activity2.start !== activity2.end)
+        assertTrue(activity2.end!! >= before)
+        assertTrue(activity2.end!! <= after)
     }
 }

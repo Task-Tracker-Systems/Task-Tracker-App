@@ -17,4 +17,3 @@ class DBTaskCollectionReader internal constructor(private val driverFactory: Dri
         return DBAwareTaskCollection(collection, database)
     }
 }
-
