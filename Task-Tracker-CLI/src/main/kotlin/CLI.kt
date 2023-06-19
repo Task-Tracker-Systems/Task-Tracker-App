@@ -2,7 +2,14 @@ import com.garbereder.tasktracker.entities.ActivityCollection
 import com.garbereder.tasktracker.entities.ActivityCollectionImpl
 import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.entities.TaskCollection
-import com.garbereder.tasktracker.usecases.tasks.*
+import com.garbereder.tasktracker.usecases.tasks.ActivityCollectionReader
+import com.garbereder.tasktracker.usecases.tasks.AddTask
+import com.garbereder.tasktracker.usecases.tasks.ListTasks
+import com.garbereder.tasktracker.usecases.tasks.LoadActivities
+import com.garbereder.tasktracker.usecases.tasks.LoadTasks
+import com.garbereder.tasktracker.usecases.tasks.StartActivity
+import com.garbereder.tasktracker.usecases.tasks.StopActivity
+import com.garbereder.tasktracker.usecases.tasks.TaskCollectionReaderFactory
 import com.github.kinquirer.KInquirer
 import com.github.kinquirer.components.promptInput
 import com.github.kinquirer.components.promptList
@@ -55,7 +62,6 @@ class CLI(private val taskCollectionReaderFactory: TaskCollectionReaderFactory) 
     }
 
     fun run() {
-
         println("Welcome to Task-Tracker-CLI")
         val tasks = LoadTasks(taskCollectionReaderFactory.create()).invoke()
 
