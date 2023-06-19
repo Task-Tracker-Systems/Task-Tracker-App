@@ -4,7 +4,7 @@ import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.entities.TaskCollection
 import com.garbereder.tasktracker.usecases.sqlite.Database
 
-class DBAwareTaskCollection(private val baseCollection: TaskCollection, private val database: Database):
+class DBAwareTaskCollection(private val baseCollection: TaskCollection, private val database: Database) :
     TaskCollection {
     override fun add(task: Task) {
         database.transaction {
@@ -21,5 +21,6 @@ class DBAwareTaskCollection(private val baseCollection: TaskCollection, private 
             baseCollection.remove(task)
         }
     }
+
     override fun size(): Int = baseCollection.size()
 }
