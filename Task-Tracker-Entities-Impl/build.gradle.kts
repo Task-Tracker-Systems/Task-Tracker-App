@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform") version "1.8.22"
     id("maven-publish")
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
 }
 
 group = "com.garbereder.tasktracker.entities-impl"
@@ -12,13 +13,6 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
-            }
-        }
-    }
     jvm {
         jvmToolchain(17)
         withJava()
@@ -44,7 +38,11 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))

@@ -3,13 +3,17 @@ package com.garbereder.tasktracker.usecases.tasks
 import com.garbereder.tasktracker.entities.Activity
 import com.garbereder.tasktracker.entities.ActivityCollection
 import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.entities.TaskCollection
-import io.mockative.*
+import io.mockative.Mock
+import io.mockative.classOf
+import io.mockative.given
+import io.mockative.mock
+import io.mockative.once
+import io.mockative.thenDoNothing
+import io.mockative.verify
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 class AddActivityTest {
 
@@ -18,7 +22,7 @@ class AddActivityTest {
 
     @Test
     fun invoke_activity_callAdd() {
-        val task = Task("1","TaskName")
+        val task = Task("1", "TaskName")
         val time = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val activity = Activity("1", time, null, task)
 
