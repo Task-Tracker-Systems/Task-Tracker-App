@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform") version "1.8.22"
     id("maven-publish")
     id("com.google.devtools.ksp") version "1.8.22-1.0.11"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
 }
 
 group = "com.garbereder.tasktracker.usecases"
@@ -13,19 +14,6 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation("io.mockative:mockative:1.4.1")
-            }
-        }
-    }
     jvm {
         jvmToolchain(17)
         withJava()
@@ -50,11 +38,16 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+            }
+        }
         val commonTest by getting {
             dependencies {
+                implementation("io.mockative:mockative:1.4.1")
                 implementation(kotlin("test"))
             }
         }
@@ -64,6 +57,15 @@ kotlin {
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
+    }
+}
+
+ktlint {
+    filter {
+        // https://github.com/JLLeitschuh/ktlint-gradle/issues/522#issuecomment-958756817
+        exclude { entry ->
+            entry.file.toString().contains("generated")
+        }
     }
 }
 

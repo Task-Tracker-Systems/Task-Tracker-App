@@ -10,9 +10,9 @@ class ActivityCollectionImpl : ActivityCollection {
     override fun iterator(): Iterator<Activity> = list.iterator()
 
     override fun remove(activity: Activity) {
-        if (!list.contains(activity))
+        if (!list.contains(activity)) {
             throw ActivityNotFoundException(activity)
+        }
         list.remove(activity)
     }
-
 }

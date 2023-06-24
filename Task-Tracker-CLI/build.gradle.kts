@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.8.22"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
     application
 }
 
@@ -9,7 +10,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenLocal()
     mavenCentral()
-    maven ("https://jitpack.io")
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -19,6 +20,7 @@ dependencies {
     implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
     implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
     implementation("com.garbereder.tasktracker.entities-impl:Task-Tracker-Entities-Impl:1.0-SNAPSHOT")
+    implementation("com.garbereder.tasktracker.usecases.sqlite:Task-Tracker-Usecases-SQLite-Impl:1.0-SNAPSHOT")
 }
 
 tasks.test {

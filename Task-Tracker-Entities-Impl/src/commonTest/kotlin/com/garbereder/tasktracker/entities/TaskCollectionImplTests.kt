@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class ListTaskCollectionImpl {
+class TaskCollectionImplTests {
 
     @Test
     fun add_once_oneEntry() {

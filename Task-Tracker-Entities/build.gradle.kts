@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform") version "1.8.22"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
     id("maven-publish")
 }
 
@@ -11,13 +12,6 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-            }
-        }
-    }
     jvm {
         jvmToolchain(17)
         withJava()
@@ -42,9 +36,12 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
