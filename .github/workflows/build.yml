@@ -31,32 +31,7 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     - name: Build with Gradle
-      run: |
-        chmod +x gradlew &&
-        
-        cd Task-Tracker-Entities &&
-        ln -s ../gradle &&
-        ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal
-
-        cd ../Task-Tracker-Entities-Impl &&
-        ln -s ../gradle &&
-        ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal
-
-        cd ../Task-Tracker-Usecases &&
-        ln -s ../gradle &&
-        ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal &&
-
-        cd ../Task-Tracker-CLI &&
-        ln -s ../gradle &&
-        ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew assembleDist
+      run: chmod +x build.sh && ./build.sh
     - uses: actions/upload-artifact@v3
       with:
         name: distribution
