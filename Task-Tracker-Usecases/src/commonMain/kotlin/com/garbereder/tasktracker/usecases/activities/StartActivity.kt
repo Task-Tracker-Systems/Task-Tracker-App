@@ -1,4 +1,4 @@
-package com.garbereder.tasktracker.usecases.tasks
+package com.garbereder.tasktracker.usecases.activities
 
 import com.garbereder.tasktracker.entities.Activity
 import com.garbereder.tasktracker.entities.Task
