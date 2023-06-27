@@ -31,7 +31,7 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     - name: Build with Gradle
-      run: chmod +x build.sh && ./build.sh
+      run: ./build.sh
     - uses: actions/upload-artifact@v3
       with:
         name: distribution
