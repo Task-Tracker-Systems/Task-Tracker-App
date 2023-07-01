@@ -8,7 +8,7 @@ The app is designed to work with the [Task-Tracker-Device](https://github.com/Ta
 Run the gradle build in each directory or use the `build.sh` file.
 
 ### Docker
-Powershell
+Shell
 ```Powershell
 docker build -t task-tracker-systems/task-tracker-app:1 .
 docker run --rm -v ${PWD}:/dev/mnt task-tracker-systems/task-tracker-app:1
