@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS Activity (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  task_id INTEGER NOT NULL,
+  duration INTEGER NOT NULL,
+  FOREIGN KEY (task_id) REFERENCES Task(id) ON DELETE CASCADE
+);
+
+selectAll:
+SELECT *
+FROM Activity;
+
+selectAllWithTask:
+SELECT name AS task_name, duration
+FROM Activity A JOIN Task T ON (A.task_id = T.id);
+
+insert:
+INSERT INTO Activity(task_id, duration)
+VALUES (?, ?);
+
+deleteById:
+DELETE FROM Activity
+WHERE id = ?;
+
+findByTaskIdAndDuration:
+SELECT *
+FROM Activity
+WHERE task_id = ?
+AND duration = ?;

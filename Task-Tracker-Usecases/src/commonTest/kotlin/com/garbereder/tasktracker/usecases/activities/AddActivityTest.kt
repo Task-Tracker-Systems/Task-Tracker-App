@@ -10,9 +10,6 @@ import io.mockative.mock
 import io.mockative.once
 import io.mockative.thenDoNothing
 import io.mockative.verify
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlin.test.Test
 
 class AddActivityTest {
@@ -22,9 +19,8 @@ class AddActivityTest {
 
     @Test
     fun invoke_activity_callAdd() {
-        val task = Task("1", "TaskName")
-        val time = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-        val activity = Activity("1", time, null, task)
+        val task = Task("TaskName")
+        val activity = Activity(0, task)
 
         given(collection).invocation { add(activity) }
             .thenDoNothing()

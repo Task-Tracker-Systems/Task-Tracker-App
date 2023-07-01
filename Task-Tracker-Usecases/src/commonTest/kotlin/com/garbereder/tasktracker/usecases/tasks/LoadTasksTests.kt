@@ -8,7 +8,7 @@ import io.mockative.mock
 import io.mockative.once
 import io.mockative.verify
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class LoadTasksTests {
     @Mock
@@ -22,8 +22,9 @@ class LoadTasksTests {
         given(reader).invocation { read() }
             .then { collection }
 
-        val col = LoadTasks(reader).invoke()
-        assertEquals(collection, col)
+        val uc = LoadTasks(reader).invoke()
+
+        assertNotNull(uc)
 
         verify(reader).invocation { read() }
             .wasInvoked(exactly = once)

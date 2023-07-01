@@ -1,58 +1,76 @@
-import com.garbereder.tasktracker.entities.ActivityCollection
-import com.garbereder.tasktracker.entities.ActivityCollectionImpl
+import com.garbereder.tasktracker.entities.DuplicateTaskException
 import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.entities.TaskCollection
-import com.garbereder.tasktracker.usecases.activities.ActivityCollectionReader
-import com.garbereder.tasktracker.usecases.activities.LoadActivities
-import com.garbereder.tasktracker.usecases.activities.StartActivity
-import com.garbereder.tasktracker.usecases.activities.StopActivity
-import com.garbereder.tasktracker.usecases.tasks.AddTask
-import com.garbereder.tasktracker.usecases.tasks.ListTasks
-import com.garbereder.tasktracker.usecases.tasks.LoadTasks
+import com.garbereder.tasktracker.usecases.activities.ActivityCollectionReaderFactory
+import com.garbereder.tasktracker.usecases.activities.ActivityUseCases
 import com.garbereder.tasktracker.usecases.tasks.TaskCollectionReaderFactory
+import com.garbereder.tasktracker.usecases.tasks.TaskUseCases
 import com.github.kinquirer.KInquirer
+import com.github.kinquirer.components.promptConfirm
 import com.github.kinquirer.components.promptInput
 import com.github.kinquirer.components.promptList
+import kotlinx.datetime.Clock
 import kotlin.system.exitProcess
 
-class CLI(private val taskCollectionReaderFactory: TaskCollectionReaderFactory) {
+class CLI(
+    private val taskCollectionReaderFactory: TaskCollectionReaderFactory,
+    private val activityCollectionReaderFactory: ActivityCollectionReaderFactory
+) {
     companion object {
         val back = "Return"
 
-        fun addTask(tasks: TaskCollection): () -> Unit = {
+        fun addTask(taskUseCases: TaskUseCases): () -> Unit = {
             val taskName = KInquirer.promptInput("Task name:")
             if (taskName == back) {
                 println("Illegal Task Name")
             } else {
-                AddTask(tasks, taskName).invoke()
+                try {
+                    taskUseCases.createAddTask(taskName).invoke()
+                } catch (e: DuplicateTaskException) {
+                    println(e.message)
+                }
             }
         }
 
-        fun listActivities(activities: ActivityCollection): () -> Unit = {
-            val actIt = activities.iterator()
+        fun listActivities(activityUseCases: ActivityUseCases): () -> Unit = {
+            val actIt = activityUseCases.createListActivity().invoke()
             while (actIt.hasNext()) {
                 println(actIt.next())
             }
         }
 
-        fun listTasks(activities: ActivityCollection, tasks: TaskCollection): () -> Unit = {
-            val taskIterator = ListTasks(tasks).invoke()
+        fun listTasks(activityUseCases: ActivityUseCases, taskUseCases: TaskUseCases): () -> Unit = {
+            val taskIterator = taskUseCases.createListTasks().invoke()
             val taskList = mutableMapOf<String, Task>()
             while (taskIterator.hasNext()) {
                 val task = taskIterator.next()
-                taskList["$task.name (${task.id})"] = task
+                taskList[task.name] = task
             }
             val options = taskList.keys.toMutableList()
             options.add(back)
-            val selection: String = KInquirer.promptList("What do you want to start?", options)
+            val selection: String = KInquirer.promptList("Select a task:", options)
             if (selection !== back) {
-                val activity = StartActivity(taskList[selection]!!).invoke()
-                activities.add(activity)
-                KInquirer.promptInput("${activity.task} started at ${activity.start}. Finish now?")
-                val stoppedActivity = StopActivity(activity).invoke()
-                activities.add(stoppedActivity)
-                activities.remove(activity)
-                println("${stoppedActivity.task} started at ${stoppedActivity.start} and finished at ${stoppedActivity.end}")
+                val task = taskList[selection]!!
+                when (KInquirer.promptList("What do you want ot do?", listOf("Start", "Delete"))) {
+                    "Start" -> {
+                        val activity = activityUseCases.createStartActivity(task).invoke()
+                        val start = Clock.System.now()
+                        KInquirer.promptInput("${activity.task} started. Finish now?")
+                        val stop = Clock.System.now()
+                        val duration = stop - start
+                        val stoppedActivity =
+                            activityUseCases.createStopActivity(activity, duration.inWholeSeconds).invoke()
+                        println("${stoppedActivity.task} started at $start and finished at $stop, tracked with ${stoppedActivity.durationInSeconds}s")
+                    }
+
+                    "Delete" -> {
+                        val confirm = KInquirer.promptConfirm("Are you sure to delete $task")
+                        if (confirm) {
+                            taskUseCases.createRemoveTasks(task).invoke()
+                            activityUseCases.createRemoveActivities(task).invoke()
+                            println("$task was removed")
+                        }
+                    }
+                }
             }
         }
 
@@ -63,16 +81,14 @@ class CLI(private val taskCollectionReaderFactory: TaskCollectionReaderFactory) 
 
     fun run() {
         println("Welcome to Task-Tracker-CLI")
-        val tasks = LoadTasks(taskCollectionReaderFactory.create()).invoke()
-
-        val activities = LoadActivities(object : ActivityCollectionReader {
-            override fun read(): ActivityCollection = ActivityCollectionImpl()
-        }).invoke()
+        val useCases = TaskUseCases.createTaskUseCasesFromLoadTasks(taskCollectionReaderFactory.create()).invoke()
+        val activityUseCases =
+            ActivityUseCases.createActivityUseCasesFromLoadActivities(activityCollectionReaderFactory.create()).invoke()
 
         val choices = mapOf(
-            "AddTask" to addTask(tasks),
-            "ListTask" to listTasks(activities, tasks),
-            "ListActivities" to listActivities(activities),
+            "AddTask" to addTask(useCases),
+            "ListTask" to listTasks(activityUseCases, useCases),
+            "ListActivities" to listActivities(activityUseCases),
             "Quit" to quit
         )
         while (true) {

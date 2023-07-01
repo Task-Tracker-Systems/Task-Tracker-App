@@ -43,7 +43,6 @@ kotlin {
             dependencies {
                 implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
                 implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
-                implementation("com.garbereder.tasktracker.entities-impl:Task-Tracker-Entities-Impl:1.0-SNAPSHOT")
             }
         }
         val commonTest by getting {

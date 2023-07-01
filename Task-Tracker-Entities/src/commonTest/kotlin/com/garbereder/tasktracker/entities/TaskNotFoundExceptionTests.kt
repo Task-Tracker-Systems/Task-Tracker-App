@@ -7,8 +7,8 @@ class TaskNotFoundExceptionTests {
 
     @Test
     fun testMessage() {
-        val task = Task("TaskId", "TaskName")
+        val task = Task("TaskName")
         val ex = TaskNotFoundException(task)
-        assertEquals("Could not find task: Task(id=TaskId, name=TaskName)", ex.message)
+        assertEquals("Could not find task: Task(name=TaskName)", ex.message)
     }
 }

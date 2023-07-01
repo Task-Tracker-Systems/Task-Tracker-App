@@ -16,17 +16,26 @@ class AddTaskTests {
     val collection = mock(classOf<TaskCollection>())
 
     @Test
-    fun invoke_noInput_callsThrough() {
-        val task = Task("1", "TaskName")
+    fun addOneEntry() {
+        val task = Task("TaskName")
         given(collection).invocation { add(task) }
             .thenDoNothing()
-        given(collection).invocation { size() }
-            .then { 0 }
 
         AddTask(collection, "TaskName").invoke()
 
-        verify(collection).invocation { size() }
+        verify(collection).invocation { add(task) }
             .wasInvoked(exactly = once)
+    }
+
+    @Test
+    fun addDuplicateEntryExpectException() {
+        val task = Task("TaskName")
+        given(collection).invocation { add(task) }
+            .thenDoNothing()
+
+        AddTask(collection, "TaskName").invoke()
+        ex AddTask(collection, "TaskName").invoke()
+
         verify(collection).invocation { add(task) }
             .wasInvoked(exactly = once)
     }

@@ -39,13 +39,6 @@ jobs:
         ln -s ../gradlew &&
         ./gradlew check &&
         ./gradlew publishToMavenLocal
-    - name: Compile Task-Tracker-Entities-Impl
-      run: |
-        cd Task-Tracker-Entities-Impl &&
-        ln -s ../gradle &&
-        ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal
     - name: Compile Task-Tracker-Usecases
       run: |
         cd Task-Tracker-Usecases &&
