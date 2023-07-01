@@ -1,5 +1,4 @@
 #!/bin/sh
-chmod +x gradlew
 cd Task-Tracker-Entities
 if [ ! -d "gradle" ]; then
     ln -s ../gradle
