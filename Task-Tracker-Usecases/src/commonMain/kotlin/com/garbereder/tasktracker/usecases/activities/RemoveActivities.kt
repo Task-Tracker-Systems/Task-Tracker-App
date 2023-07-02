@@ -1,6 +1,5 @@
 package com.garbereder.tasktracker.usecases.activities
 
-import com.garbereder.tasktracker.entities.Activity
 import com.garbereder.tasktracker.entities.ActivityCollection
 import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.usecases.UseCase

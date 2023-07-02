@@ -10,5 +10,4 @@ class StopActivity(private val collection: ActivityCollection, private val activ
         collection.add(act)
         return act
     }
-
 }

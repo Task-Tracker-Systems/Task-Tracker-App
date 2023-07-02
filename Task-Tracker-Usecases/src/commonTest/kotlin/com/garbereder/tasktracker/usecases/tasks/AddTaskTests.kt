@@ -26,17 +26,4 @@ class AddTaskTests {
         verify(collection).invocation { add(task) }
             .wasInvoked(exactly = once)
     }
-
-    @Test
-    fun addDuplicateEntryExpectException() {
-        val task = Task("TaskName")
-        given(collection).invocation { add(task) }
-            .thenDoNothing()
-
-        AddTask(collection, "TaskName").invoke()
-        ex AddTask(collection, "TaskName").invoke()
-
-        verify(collection).invocation { add(task) }
-            .wasInvoked(exactly = once)
-    }
 }
