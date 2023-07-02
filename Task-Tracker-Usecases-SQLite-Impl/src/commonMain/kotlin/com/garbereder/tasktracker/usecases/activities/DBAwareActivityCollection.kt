@@ -3,7 +3,6 @@ package com.garbereder.tasktracker.usecases.activities
 import com.garbereder.tasktracker.entities.Activity
 import com.garbereder.tasktracker.entities.ActivityCollection
 import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.entities.TaskCollection
 import com.garbereder.tasktracker.usecases.sqlite.Database
 
 class DBAwareActivityCollection(private val database: Database) :
@@ -21,9 +20,9 @@ class DBAwareActivityCollection(private val database: Database) :
     override fun remove(activity: Activity) {
         database.transaction {
             val task = database.tasksQueries.findByName(activity.task.name).executeAsOne()
-            val act = database.activitiesQueries.findByTaskIdAndDuration(task.id, activity.durationInSeconds).executeAsOne()
+            val act =
+                database.activitiesQueries.findByTaskIdAndDuration(task.id, activity.durationInSeconds).executeAsOne()
             database.activitiesQueries.deleteById(act.id)
         }
     }
-
 }
