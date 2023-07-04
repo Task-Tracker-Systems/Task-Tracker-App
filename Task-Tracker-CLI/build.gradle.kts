@@ -19,7 +19,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
     implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
     implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
-    implementation("com.garbereder.tasktracker.entities-impl:Task-Tracker-Entities-Impl:1.0-SNAPSHOT")
     implementation("com.garbereder.tasktracker.usecases.sqlite:Task-Tracker-Usecases-SQLite-Impl:1.0-SNAPSHOT")
 }
 

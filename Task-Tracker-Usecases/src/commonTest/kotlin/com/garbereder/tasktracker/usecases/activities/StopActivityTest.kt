@@ -1,28 +1,39 @@
 package com.garbereder.tasktracker.usecases.activities
 
 import com.garbereder.tasktracker.entities.Activity
+import com.garbereder.tasktracker.entities.ActivityCollection
 import com.garbereder.tasktracker.entities.Task
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import io.mockative.Mock
+import io.mockative.classOf
+import io.mockative.given
+import io.mockative.mock
+import io.mockative.once
+import io.mockative.thenDoNothing
+import io.mockative.verify
 import kotlin.test.Test
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 class StopActivityTest {
 
+    @Mock
+    val collection = mock(classOf<ActivityCollection>())
+
     @Test
     fun invoke_noInput_setStart() {
-        val task = Task("1", "TaskName")
-        val before = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-        val activity = Activity("1", before, null, task)
-        val activity2 = StopActivity(activity).invoke()
-        val after = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+        val task = Task("TaskName")
+        val activity = Activity(0, task)
 
-        assertTrue(activity.end === null)
+        given(collection)
+            .invocation { add(activity.copy(durationInSeconds = 50L)) }
+            .thenDoNothing()
 
-        assertTrue(activity2.id == "1")
-        assertTrue(activity2.start !== activity2.end)
-        assertTrue(activity2.end!! >= before)
-        assertTrue(activity2.end!! <= after)
+        val activity2 = StopActivity(collection, activity, 50L).invoke()
+
+        assertEquals(0, activity.durationInSeconds)
+        assertEquals(50, activity2.durationInSeconds)
+        assertEquals(task, activity2.task)
+        verify(collection)
+            .invocation { add(activity2) }
+            .wasInvoked(exactly = once)
     }
 }

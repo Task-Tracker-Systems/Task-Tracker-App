@@ -1,18 +1,24 @@
 CREATE TABLE IF NOT EXISTS Task (
-  task_id TEXT NOT NULL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
 );
-
-CREATE UNIQUE INDEX IF NOT EXISTS task_id_ix ON Task(task_id);
 
 selectAll:
 SELECT *
 FROM Task;
 
 insert:
-INSERT INTO Task(task_id, name)
-VALUES (?, ?);
+INSERT INTO Task(name)
+VALUES (?);
+
+deleteByName:
+DELETE FROM Task
+WHERE name = ?;
 
 deleteById:
 DELETE FROM Task
-WHERE task_id = ?;
+WHERE id = ?;
+
+findByName:
+SELECT * FROM Task
+WHERE name = ?;

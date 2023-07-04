@@ -7,8 +7,8 @@ class DuplicateTaskExceptionTests {
 
     @Test
     fun testMessage() {
-        val task = Task("TaskId", "TaskName")
+        val task = Task("TaskName")
         val ex = DuplicateTaskException(task)
-        assertEquals("Could not add duplicate task: Task(id=TaskId, name=TaskName)", ex.message)
+        assertEquals("Could not add duplicate task: Task(name=TaskName)", ex.message)
     }
 }
