@@ -17,7 +17,7 @@ class RemoveTaskTest {
 
     @Test
     fun invoke_noInput_callsThrough() {
-        val task = Task("TaskName")
+        val task = Task("TaskName", 0L)
         given(collection).invocation { remove(task) }
             .thenDoNothing()
         RemoveTask(collection, task).invoke()

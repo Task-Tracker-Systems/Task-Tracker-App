@@ -13,11 +13,17 @@ class DBAwareTaskCollection(private val database: Database) :
         }
     }
 
-    override fun iterator(): Iterator<Task> = database.tasksQueries.selectAll().executeAsList().map { t -> Task(t.name) }.iterator()
+    override fun iterator(): Iterator<Task> = database.tasksQueries.selectAll().executeAsList().map { t -> Task(t.name, t.total_duration) }.iterator()
 
     override fun remove(task: Task) {
         database.transaction {
             database.tasksQueries.deleteByName(task.name)
+        }
+    }
+
+    override fun replace(task: Task) {
+        database.transaction {
+            database.tasksQueries.setTotalDuration(task.totalDuration, task.name)
         }
     }
 

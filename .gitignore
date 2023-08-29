@@ -7,3 +7,5 @@ kotlin-js-store
 gradle
 gradlew
 gradlew.bat
+
+*.sqlite
