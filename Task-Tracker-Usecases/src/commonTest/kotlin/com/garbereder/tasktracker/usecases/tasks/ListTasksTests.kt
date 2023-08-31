@@ -20,8 +20,8 @@ class ListTasksTests {
     @Test
     fun invoke_noInput_callsThrough() {
         val tasks = listOf(
-            Task("TaskName"),
-            Task("TaskName2")
+            Task("TaskName", 0L),
+            Task("TaskName2", 0L)
         )
         given(collection).invocation { iterator() }
             .then { tasks.iterator() }

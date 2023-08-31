@@ -17,7 +17,7 @@ class AddTaskTests {
 
     @Test
     fun addOneEntry() {
-        val task = Task("TaskName")
+        val task = Task("TaskName", 0L)
         given(collection).invocation { add(task) }
             .thenDoNothing()
 

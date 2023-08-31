@@ -1,9 +1,7 @@
 import com.garbereder.tasktracker.entities.DuplicateTaskException
 import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.usecases.activities.ActivityCollectionReaderFactory
-import com.garbereder.tasktracker.usecases.activities.ActivityUseCases
+import com.garbereder.tasktracker.usecases.UseCases
 import com.garbereder.tasktracker.usecases.tasks.TaskCollectionReaderFactory
-import com.garbereder.tasktracker.usecases.tasks.TaskUseCases
 import com.github.kinquirer.KInquirer
 import com.github.kinquirer.components.promptConfirm
 import com.github.kinquirer.components.promptInput
@@ -12,38 +10,30 @@ import kotlinx.datetime.Clock
 import kotlin.system.exitProcess
 
 class CLI(
-    private val taskCollectionReaderFactory: TaskCollectionReaderFactory,
-    private val activityCollectionReaderFactory: ActivityCollectionReaderFactory
+    private val taskCollectionReaderFactory: TaskCollectionReaderFactory
 ) {
     companion object {
         val back = "Return"
 
-        fun addTask(taskUseCases: TaskUseCases): () -> Unit = {
+        fun addTask(useCases: UseCases): () -> Unit = {
             val taskName = KInquirer.promptInput("Task name:")
             if (taskName == back) {
                 println("Illegal Task Name")
             } else {
                 try {
-                    taskUseCases.createAddTask(taskName).invoke()
+                    useCases.createAddTask(taskName).invoke()
                 } catch (e: DuplicateTaskException) {
                     println(e.message)
                 }
             }
         }
 
-        fun listActivities(activityUseCases: ActivityUseCases): () -> Unit = {
-            val actIt = activityUseCases.createListActivity().invoke()
-            while (actIt.hasNext()) {
-                println(actIt.next())
-            }
-        }
-
-        fun listTasks(activityUseCases: ActivityUseCases, taskUseCases: TaskUseCases): () -> Unit = {
-            val taskIterator = taskUseCases.createListTasks().invoke()
+        fun listTasks(useCases: UseCases): () -> Unit = {
+            val taskIterator = useCases.createListTasks().invoke()
             val taskList = mutableMapOf<String, Task>()
             while (taskIterator.hasNext()) {
                 val task = taskIterator.next()
-                taskList[task.name] = task
+                taskList["${task.name}(${task.totalDuration}s)"] = task
             }
             val options = taskList.keys.toMutableList()
             options.add(back)
@@ -52,21 +42,18 @@ class CLI(
                 val task = taskList[selection]!!
                 when (KInquirer.promptList("What do you want ot do?", listOf("Start", "Delete"))) {
                     "Start" -> {
-                        val activity = activityUseCases.createStartActivity(task).invoke()
                         val start = Clock.System.now()
-                        KInquirer.promptInput("${activity.task} started. Finish now?")
+                        KInquirer.promptInput("${task.name} started. Finish now?")
                         val stop = Clock.System.now()
                         val duration = stop - start
-                        val stoppedActivity =
-                            activityUseCases.createStopActivity(activity, duration.inWholeSeconds).invoke()
-                        println("${stoppedActivity.task} started at $start and finished at $stop, tracked with ${stoppedActivity.durationInSeconds}s")
+                        useCases.createAddTaskDuration(task, duration.inWholeSeconds).invoke()
+                        println("${task.name} started at $start and finished at $stop, tracked with ${duration.inWholeSeconds}s")
                     }
 
                     "Delete" -> {
                         val confirm = KInquirer.promptConfirm("Are you sure to delete $task")
                         if (confirm) {
-                            taskUseCases.createRemoveTasks(task).invoke()
-                            activityUseCases.createRemoveActivities(task).invoke()
+                            useCases.createRemoveTasks(task).invoke()
                             println("$task was removed")
                         }
                     }
@@ -81,14 +68,13 @@ class CLI(
 
     fun run() {
         println("Welcome to Task-Tracker-CLI")
-        val useCases = TaskUseCases.createTaskUseCasesFromLoadTasks(taskCollectionReaderFactory.create()).invoke()
-        val activityUseCases =
-            ActivityUseCases.createActivityUseCasesFromLoadActivities(activityCollectionReaderFactory.create()).invoke()
+        val useCases = UseCases.createUseCasesFromReaders(
+            taskCollectionReaderFactory.create()
+        )
 
         val choices = mapOf(
             "AddTask" to addTask(useCases),
-            "ListTask" to listTasks(activityUseCases, useCases),
-            "ListActivities" to listActivities(activityUseCases),
+            "ListTask" to listTasks(useCases),
             "Quit" to quit
         )
         while (true) {
