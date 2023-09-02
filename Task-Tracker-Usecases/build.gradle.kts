@@ -73,6 +73,6 @@ dependencies {
     configurations
         .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
         .forEach {
-            add(it.name, "io.mockative:mockative-processor:1.4.1")
+            add(it.name, "io.mockative:mockative-processor:2.0.1")
         }
 }
