@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform") version "1.8.22"
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
     id("maven-publish")
+    id("com.gradle.build-scan") version "3.3.4"
 }
 
 group = "com.garbereder.tasktracker.entities"
@@ -52,5 +53,18 @@ kotlin {
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
+    }
+}
+
+gradleEnterprise {
+    // configuration
+    buildScan {
+
+        // Connecting to scans.gradle.com by agreeing to the terms of service
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+
+        // Publishing a build scan for every build execution
+        publishAlways()
     }
 }
