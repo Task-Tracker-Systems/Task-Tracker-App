@@ -2,6 +2,7 @@ package com.garbereder.tasktracker.usecases.tasks
 
 import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.entities.TaskCollection
+import com.garbereder.tasktracker.usecases.UseCases
 import io.mockative.Mock
 import io.mockative.classOf
 import io.mockative.given
@@ -26,7 +27,9 @@ class ListTasksTests {
         given(collection).invocation { iterator() }
             .then { tasks.iterator() }
 
-        val it = ListTasks(collection).invoke()
+        val it = UseCases.createUseCasesFromReaders(object : TaskCollectionReader {
+            override fun read(): TaskCollection = collection
+        }).createListTasks().invoke()
 
         verify(collection).invocation { iterator() }
             .wasInvoked(exactly = once)

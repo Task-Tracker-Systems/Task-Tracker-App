@@ -22,5 +22,5 @@ class UseCases(
     fun createAddTask(taskName: String): UseCase<Unit> = AddTask(taskCollection, taskName)
     fun createListTasks(): UseCase<Iterator<Task>> = ListTasks(taskCollection)
     fun createAddTaskDuration(task: Task, duration: Long): UseCase<Unit> = AddTaskDuration(taskCollection, task, duration)
-    fun createRemoveTasks(task: Task): UseCase<Unit> = RemoveTask(taskCollection, task)
+    fun createRemoveTask(task: Task): UseCase<Unit> = RemoveTask(taskCollection, task)
 }

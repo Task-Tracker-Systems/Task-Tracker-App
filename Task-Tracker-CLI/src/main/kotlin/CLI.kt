@@ -53,7 +53,7 @@ class CLI(
                     "Delete" -> {
                         val confirm = KInquirer.promptConfirm("Are you sure to delete $task")
                         if (confirm) {
-                            useCases.createRemoveTasks(task).invoke()
+                            useCases.createRemoveTask(task).invoke()
                             println("$task was removed")
                         }
                     }
