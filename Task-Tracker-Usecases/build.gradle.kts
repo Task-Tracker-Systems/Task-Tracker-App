@@ -3,7 +3,6 @@ plugins {
     id("maven-publish")
     id("com.google.devtools.ksp") version "1.8.22-1.0.11"
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
-    id("com.gradle.build-scan") version "3.3.4"
     id("org.jetbrains.kotlinx.kover") version "0.7.3"
 }
 
@@ -77,17 +76,4 @@ dependencies {
         .forEach {
             add(it.name, "io.mockative:mockative-processor:2.0.1")
         }
-}
-
-gradleEnterprise {
-    // configuration
-    buildScan {
-
-        // Connecting to scans.gradle.com by agreeing to the terms of service
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-
-        // Publishing a build scan for every build execution
-        publishAlways()
-    }
 }
