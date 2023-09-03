@@ -4,9 +4,9 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.garbereder.tasktracker.usecases.tasks.DBDriverFactory
 
-actual class DriverFactory(private val url: String) : DBDriverFactory {
-    actual override fun createDriver(): SqlDriver =
-        JdbcSqliteDriver(url)
+class InMemoryDriverFactory : DBDriverFactory {
+    override fun createDriver(): SqlDriver =
+        JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
             .apply {
                 Database.Schema.create(this)
             }

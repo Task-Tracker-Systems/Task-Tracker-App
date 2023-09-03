@@ -12,21 +12,22 @@ import io.mockative.thenDoNothing
 import io.mockative.verify
 import kotlin.test.Test
 
-class AddTaskTests {
+class AddTaskDurationTests {
     @Mock
     val collection = mock(classOf<TaskCollection>())
 
     @Test
-    fun addOneEntry() {
+    fun addDuration() {
         val task = Task("TaskName", 0)
-        given(collection).invocation { add(task) }
+        val task2 = Task("TaskName", 5)
+        given(collection).invocation { replace(task2) }
             .thenDoNothing()
 
         UseCases.createUseCasesFromReaders(object : TaskCollectionReader {
             override fun read(): TaskCollection = collection
-        }).createAddTask("TaskName").invoke()
+        }).createAddTaskDuration(task, 5).invoke()
 
-        verify(collection).invocation { add(task) }
+        verify(collection).invocation { replace(task2) }
             .wasInvoked(exactly = once)
     }
 }

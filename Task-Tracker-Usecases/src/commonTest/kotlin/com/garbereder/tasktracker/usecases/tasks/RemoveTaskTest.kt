@@ -2,6 +2,7 @@ package com.garbereder.tasktracker.usecases.tasks
 
 import com.garbereder.tasktracker.entities.Task
 import com.garbereder.tasktracker.entities.TaskCollection
+import com.garbereder.tasktracker.usecases.UseCases
 import io.mockative.Mock
 import io.mockative.classOf
 import io.mockative.given
@@ -20,7 +21,10 @@ class RemoveTaskTest {
         val task = Task("TaskName", 0L)
         given(collection).invocation { remove(task) }
             .thenDoNothing()
-        RemoveTask(collection, task).invoke()
+
+        UseCases.createUseCasesFromReaders(object : TaskCollectionReader {
+            override fun read(): TaskCollection = collection
+        }).createRemoveTask(task).invoke()
 
         verify(collection).invocation { remove(task) }
             .wasInvoked(exactly = once)

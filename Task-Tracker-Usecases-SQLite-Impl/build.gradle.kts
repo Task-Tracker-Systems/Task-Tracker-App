@@ -4,6 +4,7 @@ plugins {
     id("app.cash.sqldelight") version "2.0.0-rc01"
     id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
     id("com.gradle.build-scan") version "3.3.4"
+    id("org.jetbrains.kotlinx.kover") version "0.7.3"
 }
 
 group = "com.garbereder.tasktracker.usecases.sqlite"
@@ -85,5 +86,17 @@ gradleEnterprise {
 
         // Publishing a build scan for every build execution
         publishAlways()
+    }
+}
+
+koverReport {
+    filters {
+        excludes {
+            classes(
+                "com.garbereder.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl",
+                "com.garbereder.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl\$Schema",
+                "com.garbereder.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImplKt"
+            )
+        }
     }
 }
