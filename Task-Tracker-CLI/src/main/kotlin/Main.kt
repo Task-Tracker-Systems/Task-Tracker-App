@@ -1,5 +1,5 @@
-import com.garbereder.tasktracker.usecases.sqlite.DriverFactory
-import com.garbereder.tasktracker.usecases.tasks.DBTaskCollectionReaderFactory
+import app.tasktrackersystems.tasktracker.usecases.sqlite.DriverFactory
+import app.tasktrackersystems.tasktracker.usecases.tasks.DBTaskCollectionReaderFactory
 
 fun main() {
     CLI(
