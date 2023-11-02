@@ -1,7 +1,7 @@
-import com.garbereder.tasktracker.entities.DuplicateTaskException
-import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.usecases.UseCases
-import com.garbereder.tasktracker.usecases.tasks.TaskCollectionReaderFactory
+import app.tasktrackersystems.tasktracker.entities.DuplicateTaskException
+import app.tasktrackersystems.tasktracker.entities.Task
+import app.tasktrackersystems.tasktracker.usecases.UseCases
+import app.tasktrackersystems.tasktracker.usecases.tasks.TaskCollectionReaderFactory
 import com.github.kinquirer.KInquirer
 import com.github.kinquirer.components.promptConfirm
 import com.github.kinquirer.components.promptInput
@@ -53,7 +53,7 @@ class CLI(
                     "Delete" -> {
                         val confirm = KInquirer.promptConfirm("Are you sure to delete $task")
                         if (confirm) {
-                            useCases.createRemoveTasks(task).invoke()
+                            useCases.createRemoveTask(task).invoke()
                             println("$task was removed")
                         }
                     }

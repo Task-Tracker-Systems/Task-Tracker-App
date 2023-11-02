@@ -1,7 +1,8 @@
-import com.garbereder.tasktracker.usecases.tasks.DBTaskCollectionReaderFactory
+import app.tasktrackersystems.tasktracker.usecases.sqlite.DriverFactory
+import app.tasktrackersystems.tasktracker.usecases.tasks.DBTaskCollectionReaderFactory
 
 fun main() {
     CLI(
-        DBTaskCollectionReaderFactory()
+        DBTaskCollectionReaderFactory(DriverFactory("jdbc:sqlite:tasktracker.sqlite"))
     ).run()
 }

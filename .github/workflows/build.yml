@@ -37,29 +37,25 @@ jobs:
         cd Task-Tracker-Entities &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal
+        ./gradlew check publishToMavenLocal
     - name: Compile Task-Tracker-Usecases
       run: |
         cd Task-Tracker-Usecases &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal
+        ./gradlew check publishToMavenLocal
     - name: Compile Task-Tracker-Usecases-SQLite-Impl
       run: |
         cd Task-Tracker-Usecases-SQLite-Impl &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew publishToMavenLocal
+        ./gradlew check publishToMavenLocal
     - name: Compile Task-Tracker-Usecases-CLI
       run: |
         cd Task-Tracker-CLI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
-        ./gradlew check &&
-        ./gradlew assembleDist
+        ./gradlew check assembleDist
     - uses: actions/upload-artifact@v3
       with:
         name: distribution

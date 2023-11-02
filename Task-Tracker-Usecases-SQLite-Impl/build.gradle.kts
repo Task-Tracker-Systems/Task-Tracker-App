@@ -3,9 +3,10 @@ plugins {
     id("maven-publish")
     id("app.cash.sqldelight") version "2.0.0-rc01"
     id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
+    id("org.jetbrains.kotlinx.kover") version "0.7.3"
 }
 
-group = "com.garbereder.tasktracker.usecases.sqlite"
+group = "app.tasktrackersystems.tasktracker.usecases.sqlite"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -16,7 +17,7 @@ repositories {
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("com.garbereder.tasktracker.usecases.sqlite")
+            packageName.set("app.tasktrackersystems.tasktracker.usecases.sqlite")
         }
     }
 }
@@ -41,8 +42,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+                implementation("app.tasktrackersystems.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
+                implementation("app.tasktrackersystems.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
             }
         }
         val commonTest by getting {
@@ -70,6 +71,18 @@ ktlint {
         // https://github.com/JLLeitschuh/ktlint-gradle/issues/522#issuecomment-958756817
         exclude { entry ->
             entry.file.toString().contains("generated")
+        }
+    }
+}
+
+koverReport {
+    filters {
+        excludes {
+            classes(
+                "app.tasktrackersystems.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl",
+                "app.tasktrackersystems.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl\$Schema",
+                "app.tasktrackersystems.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImplKt"
+            )
         }
     }
 }
