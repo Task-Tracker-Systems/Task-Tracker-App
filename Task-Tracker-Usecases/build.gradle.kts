@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.7.3"
 }
 
-group = "com.garbereder.tasktracker.usecases"
+group = "app.tasktrackersystems.tasktracker.usecases"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -43,7 +43,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+                implementation("app.tasktrackersystems.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
             }
         }
         val commonTest by getting {

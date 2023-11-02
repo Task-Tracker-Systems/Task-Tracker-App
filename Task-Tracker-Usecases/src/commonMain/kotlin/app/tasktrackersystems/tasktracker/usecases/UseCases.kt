@@ -1,12 +1,12 @@
-package com.garbereder.tasktracker.usecases
+package app.tasktrackersystems.tasktracker.usecases
 
-import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.entities.TaskCollection
-import com.garbereder.tasktracker.usecases.tasks.AddTask
-import com.garbereder.tasktracker.usecases.tasks.AddTaskDuration
-import com.garbereder.tasktracker.usecases.tasks.ListTasks
-import com.garbereder.tasktracker.usecases.tasks.RemoveTask
-import com.garbereder.tasktracker.usecases.tasks.TaskCollectionReader
+import app.tasktrackersystems.tasktracker.entities.Task
+import app.tasktrackersystems.tasktracker.entities.TaskCollection
+import app.tasktrackersystems.tasktracker.usecases.tasks.AddTask
+import app.tasktrackersystems.tasktracker.usecases.tasks.AddTaskDuration
+import app.tasktrackersystems.tasktracker.usecases.tasks.ListTasks
+import app.tasktrackersystems.tasktracker.usecases.tasks.RemoveTask
+import app.tasktrackersystems.tasktracker.usecases.tasks.TaskCollectionReader
 
 class UseCases(
     private val taskCollection: TaskCollection

@@ -1,8 +1,8 @@
-package com.garbereder.tasktracker.usecases.tasks
+package app.tasktrackersystems.tasktracker.usecases.tasks
 
-import com.garbereder.tasktracker.entities.Task
-import com.garbereder.tasktracker.entities.TaskCollection
-import com.garbereder.tasktracker.usecases.UseCases
+import app.tasktrackersystems.tasktracker.entities.Task
+import app.tasktrackersystems.tasktracker.entities.TaskCollection
+import app.tasktrackersystems.tasktracker.usecases.UseCases
 import io.mockative.Mock
 import io.mockative.classOf
 import io.mockative.given

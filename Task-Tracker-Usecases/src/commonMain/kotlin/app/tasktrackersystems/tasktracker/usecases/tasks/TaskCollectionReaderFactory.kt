@@ -1,4 +1,4 @@
-package com.garbereder.tasktracker.usecases.tasks
+package app.tasktrackersystems.tasktracker.usecases.tasks
 
 interface TaskCollectionReaderFactory {
     fun create(): TaskCollectionReader
