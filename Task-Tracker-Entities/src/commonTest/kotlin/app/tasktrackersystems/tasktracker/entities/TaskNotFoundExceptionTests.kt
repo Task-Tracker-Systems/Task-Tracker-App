@@ -1,4 +1,4 @@
-package com.garbereder.tasktracker.entities
+package app.tasktrackersystems.tasktracker.entities
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -1,4 +1,4 @@
-package com.garbereder.tasktracker.entities
+package app.tasktrackersystems.tasktracker.entities
 
 interface TaskCollection : Iterable<Task> {
     fun add(task: Task)

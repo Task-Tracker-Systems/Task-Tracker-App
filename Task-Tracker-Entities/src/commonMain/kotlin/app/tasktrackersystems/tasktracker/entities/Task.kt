@@ -1,4 +1,4 @@
-package com.garbereder.tasktracker.entities
+package app.tasktrackersystems.tasktracker.entities
 
 data class Task(
     val name: String,
