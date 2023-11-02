@@ -17,7 +17,7 @@ deleteByName:
 DELETE FROM PersistentTask
 WHERE name = ?;
 
-setTotalDuration:
+replaceByName:
 UPDATE PersistentTask
-SET total_duration = ?
+SET name = ?, total_duration = ?
 WHERE name = ?;

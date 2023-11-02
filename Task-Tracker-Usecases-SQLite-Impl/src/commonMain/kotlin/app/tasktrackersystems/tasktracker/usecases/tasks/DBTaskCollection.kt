@@ -20,9 +20,9 @@ class DBTaskCollection(private val database: Database) :
             database.tasksQueries.deleteByName(task.name)
         }
 
-    override fun replace(task: Task) =
+    override fun replace(task: Task, task2: Task) =
         database.transaction {
-            database.tasksQueries.setTotalDuration(task.totalDuration, task.name)
+            database.tasksQueries.replaceByName(task2.name, task2.totalDuration, task.name)
         }
 
     override fun size(): Int = database.tasksQueries.selectAll().executeAsList().count()

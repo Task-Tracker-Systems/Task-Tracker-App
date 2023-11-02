@@ -6,6 +6,7 @@ import app.tasktrackersystems.tasktracker.usecases.tasks.AddTask
 import app.tasktrackersystems.tasktracker.usecases.tasks.AddTaskDuration
 import app.tasktrackersystems.tasktracker.usecases.tasks.ListTasks
 import app.tasktrackersystems.tasktracker.usecases.tasks.RemoveTask
+import app.tasktrackersystems.tasktracker.usecases.tasks.RenameTask
 import app.tasktrackersystems.tasktracker.usecases.tasks.TaskCollectionReader
 
 class UseCases(
@@ -19,8 +20,9 @@ class UseCases(
     }
 
     // tasks
-    fun createAddTask(taskName: String): UseCase<Unit> = AddTask(taskCollection, taskName)
+    fun createAddTask(taskName: String): UseCase<Task> = AddTask(taskCollection, taskName)
     fun createListTasks(): UseCase<Iterator<Task>> = ListTasks(taskCollection)
-    fun createAddTaskDuration(task: Task, duration: Long): UseCase<Unit> = AddTaskDuration(taskCollection, task, duration)
+    fun createAddTaskDuration(task: Task, duration: Long): UseCase<Task> = AddTaskDuration(taskCollection, task, duration)
     fun createRemoveTask(task: Task): UseCase<Unit> = RemoveTask(taskCollection, task)
+    fun createRenameTask(task: Task, taskName: String): UseCase<Task> = RenameTask(taskCollection, task, taskName)
 }
