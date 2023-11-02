@@ -2,11 +2,11 @@ plugins {
     kotlin("multiplatform") version "1.8.22"
     id("maven-publish")
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
-    id("org.jetbrains.kotlinx.kover") version "0.7.3"
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+    id("org.jetbrains.kotlinx.kover") version "0.7.4"
 }
 
-group = "com.garbereder.tasktracker.usecases"
+group = "app.tasktrackersystems.tasktracker.usecases"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -42,8 +42,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+                implementation("app.tasktrackersystems.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
             }
         }
         val commonTest by getting {

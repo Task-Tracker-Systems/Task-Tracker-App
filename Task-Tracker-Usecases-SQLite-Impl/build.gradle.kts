@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.7.3"
 }
 
-group = "com.garbereder.tasktracker.usecases.sqlite"
+group = "app.tasktrackersystems.tasktracker.usecases.sqlite"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -17,7 +17,7 @@ repositories {
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("com.garbereder.tasktracker.usecases.sqlite")
+            packageName.set("app.tasktrackersystems.tasktracker.usecases.sqlite")
         }
     }
 }
@@ -42,8 +42,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.garbereder.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
-                implementation("com.garbereder.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
+                implementation("app.tasktrackersystems.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
+                implementation("app.tasktrackersystems.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
             }
         }
         val commonTest by getting {
@@ -79,9 +79,9 @@ koverReport {
     filters {
         excludes {
             classes(
-                "com.garbereder.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl",
-                "com.garbereder.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl\$Schema",
-                "com.garbereder.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImplKt"
+                "app.tasktrackersystems.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl",
+                "app.tasktrackersystems.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImpl\$Schema",
+                "app.tasktrackersystems.tasktracker.usecases.sqlite.TaskTrackerUsecasesSQLiteImpl.DatabaseImplKt"
             )
         }
     }
