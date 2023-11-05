@@ -56,13 +56,18 @@ jobs:
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check assembleDist
-    - name: Compile Task-Tracker-Usecases-GUI
-      run: |
-        cd Task-Tracker-GUI &&
-        ln -s ../gradle &&
-        ln -s ../gradlew &&
-        ./gradlew check package
     - uses: actions/upload-artifact@v3
       with:
         name: distribution
         path: ./Task-Tracker-CLI/build/distributions/*.zip
+  build-windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Compile Task-Tracker-Usecases-GUI
+      run: |
+        cd Task-Tracker-GUI
+        cp ../gradle
+        cp ../gradlew.bat
+        gradlew.bat check packageReleaseMsi
