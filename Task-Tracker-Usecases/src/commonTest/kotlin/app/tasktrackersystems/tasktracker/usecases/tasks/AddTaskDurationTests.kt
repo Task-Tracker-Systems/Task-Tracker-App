@@ -46,7 +46,7 @@ class AddTaskDurationTests {
         addDuration.invoke()
         addDuration.invoke()
 
-        verify(collection).invocation { replace(task ,task2a) }
+        verify(collection).invocation { replace(task, task2a) }
             .wasInvoked(exactly = twice)
     }
 }
