@@ -38,4 +38,5 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "app.tasktrackersystems.tasktracker.android"
 }
