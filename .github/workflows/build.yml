@@ -79,4 +79,4 @@ jobs:
         cd Task-Tracker-GUI
         copy ../gradle gradle
         copy ../gradlew.bat gradlew.bat
-        gradlew.bat check packageReleaseMsi
+        .\gradlew.bat check packageReleaseMsi
