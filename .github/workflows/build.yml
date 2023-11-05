@@ -77,6 +77,5 @@ jobs:
     - name: Compile Task-Tracker-Usecases-GUI
       run: |
         cd Task-Tracker-GUI
-        xcopy ..\gradle gradle
-        copy ..\gradlew.bat gradlew.bat
+        gradle wrapper
         .\gradlew.bat check packageReleaseMsi
