@@ -88,4 +88,4 @@ jobs:
       run: |
         cd Task-Tracker-GUI
         gradle wrapper
-        .\gradlew.bat check packageReleaseMsi
+        .\gradlew.bat check packageDebugMsi
