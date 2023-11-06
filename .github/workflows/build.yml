@@ -58,7 +58,7 @@ jobs:
         ./gradlew check assembleDist
     - uses: actions/upload-artifact@v3
       with:
-        name: distribution
+        name: cli
         path: ./Task-Tracker-CLI/build/distributions/*.zip
     - uses: actions/upload-artifact@v3
       with:
@@ -89,3 +89,7 @@ jobs:
         cd Task-Tracker-GUI
         gradle wrapper
         .\gradlew.bat check packageReleaseDistributionForCurrentOS
+    - uses: actions/upload-artifact@v3
+      with:
+        name: gui-win
+        path: ./Task-Tracker-GUI/compose/binaries/main-release/msi/*.msi
