@@ -93,140 +93,152 @@ fun App() {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
         }) {
-        LazyColumn(
-            Modifier.fillMaxSize()
-        ) {
-            itemsIndexed(tasks) { idx, task ->
-                Row(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(5.dp)
-                        .hoverable(interactionSource),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(
-                        modifier = Modifier.wrapContentWidth(Alignment.Start)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            if (task.name == editTask) {
-                                var taskName by remember { mutableStateOf(task.name) }
-                                OutlinedTextField(
-                                    value = taskName,
-                                    onValueChange = { v -> taskName = v },
-                                    readOnly = false,
-                                    textStyle = TextStyle(
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Bold
-                                    ),
-                                    modifier = Modifier.padding(0.dp),
-                                    label = { Text("Task Name") },
-                                    trailingIcon = {
-                                        IconButton(
-                                            onClick = {
-                                                tasks[idx] = useCases.createRenameTask(task, taskName).invoke()
-                                                editTask = ""
-                                            }
-                                        ) {
-                                            Icon(
-                                                Icons.Default.CheckCircle,
-                                                contentDescription = "",
-                                                tint = MaterialTheme.colors.primary
-                                            )
-                                        }
-                                    }
-                                )
-                            } else {
-                                Text(
-                                    text = task.name,
-                                    modifier = Modifier
-                                        .padding(1.dp, 1.dp, 0.dp, 1.dp)
-                                        .wrapContentWidth(Alignment.Start),
-                                    fontSize = 18.sp,
-                                    textAlign = TextAlign.Left,
-                                    fontWeight = FontWeight.Bold,
-                                )
-                                Spacer(Modifier.size(5.dp))
-                                Icon(
-                                    Icons.Default.Edit,
-                                    contentDescription = "Edit",
-                                    modifier = Modifier.size(16.dp).clickable {
-                                        editTask = task.name
-                                        trackTask = ""
-                                    },
-                                    tint = MaterialTheme.colors.secondary
-                                )
-                            }
-                        }
-                        Text(
-                            text = "Duration: ${task.totalDuration}",
-                            modifier = Modifier
-                                .wrapContentWidth(Alignment.Start),
-                            fontSize = 14.sp,
-                            textAlign = TextAlign.Left
-                        )
-                    }
-                    Spacer(Modifier.size(5.dp))
+        if (tasks.any()) {
+            LazyColumn(
+                Modifier.fillMaxSize()
+            ) {
+                itemsIndexed(tasks) { idx, task ->
                     Row(
-                        modifier = Modifier.wrapContentWidth(Alignment.End)
+                        Modifier
+                            .fillMaxSize()
+                            .padding(5.dp)
+                            .hoverable(interactionSource),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
+                        Column(
+                            modifier = Modifier.wrapContentWidth(Alignment.Start)
                         ) {
-                            if (task.name == trackTask) {
-                                var taskDuration by remember { mutableStateOf("") }
-                                OutlinedTextField(
-                                    value = taskDuration,
-                                    onValueChange = { v -> taskDuration = v },
-                                    readOnly = false,
-                                    textStyle = TextStyle(
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Bold
-                                    ),
-//                                    modifier = Modifier.padding(0.dp),
-                                    label = { Text("Time to add") },
-                                    trailingIcon = {
-                                        IconButton(
-                                            onClick = {
-                                                try {
-                                                    tasks[idx] =
-                                                        useCases.createAddTaskDuration(task, taskDuration.toLong()).invoke()
-                                                } catch (e: Exception) {
-                                                } finally {
-                                                    trackTask = ""
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                if (task.name == editTask) {
+                                    var taskName by remember { mutableStateOf(task.name) }
+                                    OutlinedTextField(
+                                        value = taskName,
+                                        onValueChange = { v -> taskName = v },
+                                        readOnly = false,
+                                        textStyle = TextStyle(
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Bold
+                                        ),
+                                        modifier = Modifier.padding(0.dp),
+                                        label = { Text("Task Name") },
+                                        trailingIcon = {
+                                            IconButton(
+                                                onClick = {
+                                                    tasks[idx] = useCases.createRenameTask(task, taskName).invoke()
+                                                    editTask = ""
                                                 }
+                                            ) {
+                                                Icon(
+                                                    Icons.Default.CheckCircle,
+                                                    contentDescription = "",
+                                                    tint = MaterialTheme.colors.primary
+                                                )
                                             }
-                                        ) {
-                                            Icon(
-                                                Icons.Default.CheckCircle,
-                                                contentDescription = "",
-                                                tint = MaterialTheme.colors.primary
-                                            )
                                         }
-                                    }
-                                )
-                            } else {
-                                Button(
-                                    onClick = {
-                                        trackTask = task.name
-                                        editTask = ""
-                                    }) {
-                                    Icon(Icons.Default.AddCircle, contentDescription = "Track Time")
+                                    )
+                                } else {
+                                    Text(
+                                        text = task.name,
+                                        modifier = Modifier
+                                            .padding(1.dp, 1.dp, 0.dp, 1.dp)
+                                            .wrapContentWidth(Alignment.Start),
+                                        fontSize = 18.sp,
+                                        textAlign = TextAlign.Left,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    Spacer(Modifier.size(5.dp))
+                                    Icon(
+                                        Icons.Default.Edit,
+                                        contentDescription = "Edit",
+                                        modifier = Modifier.size(16.dp).clickable {
+                                            editTask = task.name
+                                            trackTask = ""
+                                        },
+                                        tint = MaterialTheme.colors.secondary
+                                    )
                                 }
                             }
-                            Spacer(Modifier.size(5.dp))
-                            Button(
-                                onClick = {
-                                    useCases.createRemoveTask(task).invoke()
-                                    tasks.remove(task)
-                                }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Delete")
+                            Text(
+                                text = "Duration: ${task.totalDuration}",
+                                modifier = Modifier
+                                    .wrapContentWidth(Alignment.Start),
+                                fontSize = 14.sp,
+                                textAlign = TextAlign.Left
+                            )
+                        }
+                        Spacer(Modifier.size(5.dp))
+                        Row(
+                            modifier = Modifier.wrapContentWidth(Alignment.End)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                if (task.name == trackTask) {
+                                    var taskDuration by remember { mutableStateOf("") }
+                                    OutlinedTextField(
+                                        value = taskDuration,
+                                        onValueChange = { v -> taskDuration = v },
+                                        readOnly = false,
+                                        textStyle = TextStyle(
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Bold
+                                        ),
+//                                    modifier = Modifier.padding(0.dp),
+                                        label = { Text("Time to add") },
+                                        trailingIcon = {
+                                            IconButton(
+                                                onClick = {
+                                                    try {
+                                                        tasks[idx] =
+                                                            useCases.createAddTaskDuration(task, taskDuration.toLong())
+                                                                .invoke()
+                                                    } catch (e: Exception) {
+                                                    } finally {
+                                                        trackTask = ""
+                                                    }
+                                                }
+                                            ) {
+                                                Icon(
+                                                    Icons.Default.CheckCircle,
+                                                    contentDescription = "",
+                                                    tint = MaterialTheme.colors.primary
+                                                )
+                                            }
+                                        }
+                                    )
+                                } else {
+                                    Button(
+                                        onClick = {
+                                            trackTask = task.name
+                                            editTask = ""
+                                        }) {
+                                        Icon(Icons.Default.AddCircle, contentDescription = "Track Time")
+                                    }
+                                }
+                                Spacer(Modifier.size(5.dp))
+                                Button(
+                                    onClick = {
+                                        useCases.createRemoveTask(task).invoke()
+                                        tasks.remove(task)
+                                    }) {
+                                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                                }
                             }
                         }
                     }
                 }
+            }
+        } else {
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text("You have no tasks yet.", fontWeight = FontWeight.Bold)
+                Text("Press the + button to add your first task.")
             }
         }
     }
