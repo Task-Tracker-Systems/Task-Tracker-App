@@ -13,6 +13,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  GRADLE_VERSION: 8.4
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+
 permissions:
   contents: read
 
@@ -23,13 +28,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: $JAVA_VERSION
+        distribution: $JAVA_DISTRIBUTION
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: $GRADLE_VERSION
     - name: Set Gradle executable
       run: chmod +x gradlew
     - name: Compile Task-Tracker-Entities
@@ -64,6 +71,7 @@ jobs:
       with:
         name: packages
         path: ~/.m2/repository/app/tasktrackersystems
+
   build-windows:
 
     runs-on: windows-latest
@@ -75,21 +83,25 @@ jobs:
         name: packages
         path: ~/.m2/repository/app/tasktrackersystems
     - uses: actions/checkout@v3
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: $JAVA_VERSION
+        distribution: $JAVA_DISTRIBUTION
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.4
+        gradle-version: $GRADLE_VERSION
     - name: Compile Task-Tracker-Usecases-GUI
       run: |
         cd Task-Tracker-GUI
         gradle wrapper
-        .\gradlew.bat check packageReleaseDistributionForCurrentOS
+        .\gradlew.bat check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
     - uses: actions/upload-artifact@v3
       with:
         name: gui-win
-        path: ./Task-Tracker-GUI/compose/binaries/main-release/msi/*.msi
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main/msi/*.msi
+    - uses: actions/upload-artifact@v3
+      with:
+        name: gui-win-release
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main-release/msi/*.msi
