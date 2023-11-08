@@ -11,3 +11,4 @@ gradlew.bat
 *.sqlite
 
 wix311
+*.hprof
