@@ -97,11 +97,50 @@ jobs:
         cd Task-Tracker-GUI
         gradle wrapper
         .\gradlew.bat check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
-    - uses: actions/upload-artifact@v3
+    - name: Publish .msi
+      uses: actions/upload-artifact@v3
       with:
         name: gui-win
         path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main/msi/*.msi
-    - uses: actions/upload-artifact@v3
+    - name: Publish release .msi
+      uses: actions/upload-artifact@v3
       with:
         name: gui-win-release
         path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main-release/msi/*.msi
+
+  build-ubuntu:
+
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: packages
+        path: ~/.m2/repository/app/tasktrackersystems
+    - uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{env.JAVA_VERSION}}
+        distribution: ${{env.JAVA_DISTRIBUTION}}
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: ${{env.GRADLE_VERSION}}
+    - name: Compile Task-Tracker-Usecases-GUI
+      run: |
+        cd Task-Tracker-GUI &&
+        ln -s ../gradle &&
+        ln -s ../gradlew &&
+        ./gradle check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
+    - name: Publish .msi
+      uses: actions/upload-artifact@v3
+      with:
+        name: gui-deb
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main/deb/*.deb
+    - name: Publish release .msi
+      uses: actions/upload-artifact@v3
+      with:
+        name: gui-deb-release
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main-release/deb/*.deb
