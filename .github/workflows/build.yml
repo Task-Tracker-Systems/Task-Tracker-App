@@ -133,7 +133,7 @@ jobs:
         cd Task-Tracker-GUI &&
         ln -s ../gradle &&
         ln -s ../gradlew &&
-        ./gradle check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
+        ./gradlew check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
     - name: Publish .msi
       uses: actions/upload-artifact@v3
       with:
