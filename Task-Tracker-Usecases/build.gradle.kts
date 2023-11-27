@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.8.22"
+    kotlin("multiplatform") version "1.9.21"
     id("maven-publish")
     id("com.google.devtools.ksp") version "1.8.22-1.0.11"
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
