@@ -45,13 +45,18 @@ import app.tasktrackersystems.tasktracker.entities.Task
 import app.tasktrackersystems.tasktracker.usecases.UseCases
 import app.tasktrackersystems.tasktracker.usecases.sqlite.*
 import app.tasktrackersystems.tasktracker.usecases.tasks.DBTaskCollectionReaderFactory
+import java.nio.file.Files
+import java.nio.file.Paths
 
 @Composable
 fun App() {
-    val platformName = getPlatformName()
-
+    val userHome = System.getProperty("user.home")
+    val dataDir = "${userHome}/.tasktrackersystems"
+    if(!Files.isDirectory(Paths.get(dataDir))) {
+        Files.createDirectory(Paths.get(dataDir))
+    }
     val useCases = UseCases.createUseCasesFromReaders(
-        DBTaskCollectionReaderFactory(DriverFactory("jdbc:sqlite:tasktracker.sqlite")).create()
+        DBTaskCollectionReaderFactory(DriverFactory("jdbc:sqlite:${dataDir}/tasktracker.sqlite")).create()
     )
 
     val tasks = remember {
