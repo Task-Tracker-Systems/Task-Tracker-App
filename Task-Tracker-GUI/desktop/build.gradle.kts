@@ -32,7 +32,7 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "TaskTrackerGUI"
             packageVersion = "1.0.0"
-            modules("java.instrument", "java.sql", "jdk.unsupported")
+            modules("java.sql")
             buildTypes.release {
                 proguard {
                     configurationFiles.from("compose.pro")
