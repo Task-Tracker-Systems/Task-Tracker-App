@@ -73,7 +73,7 @@ fun App() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Task Tracker GUI $platformName")
+                    Text("Task Tracker GUI")
                 }
             )
         },
