@@ -8,7 +8,6 @@ group = "app.tasktrackersystems"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    jcenter()
 }
 
 dependencies {
@@ -17,11 +16,10 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(34)
+    compileSdk = 34
     defaultConfig {
         applicationId = "app.tasktrackersystems.tasktracker.android"
-        minSdkVersion(34)
-        targetSdkVersion(34)
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0-SNAPSHOT"
     }
