@@ -70,11 +70,10 @@ compose.desktop {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 34
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

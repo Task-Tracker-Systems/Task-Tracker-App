@@ -17,11 +17,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(33)
+    compileSdkVersion(34)
     defaultConfig {
         applicationId = "app.tasktrackersystems.tasktracker.android"
-        minSdkVersion(24)
-        targetSdkVersion(33)
+        minSdkVersion(34)
+        targetSdkVersion(34)
         versionCode = 1
         versionName = "1.0-SNAPSHOT"
     }
