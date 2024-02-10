@@ -89,7 +89,7 @@ jobs:
         java-version: ${{env.JAVA_VERSION}}
         distribution: ${{env.JAVA_DISTRIBUTION}}
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
+      uses: gradle/gradle-build-action@v2
       with:
         gradle-version: ${{env.GRADLE_VERSION}}
     - name: Compile Task-Tracker-Usecases-GUI
@@ -125,7 +125,7 @@ jobs:
         java-version: ${{env.JAVA_VERSION}}
         distribution: ${{env.JAVA_DISTRIBUTION}}
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
+      uses: gradle/gradle-build-action@v2
       with:
         gradle-version: ${{env.GRADLE_VERSION}}
     - name: Set Gradle executable
@@ -136,12 +136,12 @@ jobs:
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
-    - name: Publish .msi
+    - name: Publish .deb
       uses: actions/upload-artifact@v4
       with:
         name: gui-deb
         path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main/deb/*.deb
-    - name: Publish release .msi
+    - name: Publish release .deb
       uses: actions/upload-artifact@v4
       with:
         name: gui-deb-release
