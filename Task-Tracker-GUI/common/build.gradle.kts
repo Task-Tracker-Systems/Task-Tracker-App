@@ -23,6 +23,11 @@ kotlin {
                     implementation("app.tasktrackersystems.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
                     implementation("app.tasktrackersystems.tasktracker.usecases.sqlite:Task-Tracker-Usecases-SQLite-Impl:1.0-SNAPSHOT")
                 }
+                val voyagerVersion = "1.0.0"
+                implementation("cafe.adriel.voyager:voyager-core:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-screenmodel:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
             }
         }
         val commonTest by getting {
@@ -43,10 +48,24 @@ kotlin {
         }
         val desktopMain by getting {
             dependencies {
-                api(compose.preview)
+                implementation(compose.desktop.currentOs)
             }
         }
         val desktopTest by getting
+    }
+}
+compose.desktop {
+    application {
+        mainClass = "app.tasktrackersystems.tasktracker.common.AppKt"
+        nativeDistributions {
+            targetFormats(
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi,
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
+            )
+            packageName = "jvm"
+            packageVersion = "1.0.0"
+        }
     }
 }
 

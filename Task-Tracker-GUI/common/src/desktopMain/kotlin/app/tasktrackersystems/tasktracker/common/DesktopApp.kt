@@ -1,11 +1,12 @@
 package app.tasktrackersystems.tasktracker.common
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.runtime.Composable
-import app.tasktrackersystems.tasktracker.common.App
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 
-@Preview
-@Composable
-fun AppPreview() {
-    App()
+fun main() {
+    application {
+        Window(onCloseRequest = ::exitApplication) {
+            App()
+        }
+    }
 }
