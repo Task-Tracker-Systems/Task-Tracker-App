@@ -66,6 +66,11 @@ compose.desktop {
             packageName = "jvm"
             packageVersion = "1.0.0"
         }
+        buildTypes.release {
+            proguard {
+                configurationFiles.from("../desktop/compose.pro")
+            }
+        }
     }
 }
 

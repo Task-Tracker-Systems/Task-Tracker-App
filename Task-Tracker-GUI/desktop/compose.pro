@@ -1,1 +1,2 @@
--dontwarn kotlinx.datetime.** -dontwarn cafe.adriel.voyager.** -keep class org.sqlite.** { *; }
+-dontwarn kotlinx.datetime.**,cafe.adriel.voyager.**
+-keep class org.sqlite.** { *; }
