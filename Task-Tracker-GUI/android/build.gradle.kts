@@ -20,6 +20,7 @@ android {
     defaultConfig {
         applicationId = "app.tasktrackersystems.tasktracker.android"
         targetSdk = 34
+        minSdkVersion(34)
         versionCode = 1
         versionName = "1.0-SNAPSHOT"
     }
