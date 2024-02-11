@@ -32,6 +32,8 @@ import app.tasktrackersystems.tasktracker.usecases.UseCases
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import java.security.MessageDigest
+import kotlin.math.absoluteValue
 
 data class HomeScreen(val useCases: UseCases) : Screen {
     @Composable
@@ -48,7 +50,6 @@ data class HomeScreen(val useCases: UseCases) : Screen {
                 FloatingActionButton(onClick = {
                     val taskName = "Task ${tasks.size + 1}"
                     tasks.add(useCases.createAddTask(taskName).invoke())
-                    println(taskName)
                 }) {
                     Icon(Icons.Default.Add, contentDescription = "Add")
                 }
@@ -120,5 +121,13 @@ data class HomeScreen(val useCases: UseCases) : Screen {
                 }
             }
         }
+    }
+
+    private fun String.toHslColor(saturation: Float = 0.75f, lightness: Float = 0.75f): Color {
+        val bytes = this.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        val hue = (digest.fold(0f) { acc, char -> char.toInt() * 13 + acc } % 360f).absoluteValue
+        return Color.hsl(hue, saturation, lightness)
     }
 }
