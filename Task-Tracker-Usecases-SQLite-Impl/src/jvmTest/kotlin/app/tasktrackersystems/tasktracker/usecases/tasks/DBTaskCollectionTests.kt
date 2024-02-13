@@ -108,8 +108,9 @@ class DBTaskCollectionTests {
     fun testReplace() {
         val database = Database(InMemoryDriverFactory().createDriver())
         val collection = DBTaskCollection(database)
-        collection.add(Task("Task", 5))
-        collection.replace(Task("Task", 20))
+        val task = Task("Task", 5)
+        collection.add(task)
+        collection.replace(task, Task("Task", 20))
 
         // Collection handling
         assertEquals(1, collection.size())
@@ -121,5 +122,25 @@ class DBTaskCollectionTests {
         val tasks = database.tasksQueries.selectAll().executeAsList()
         assertEquals(1, tasks.size)
         assertEquals(PersistentTask(1, "Task", 20), tasks[0])
+    }
+
+    @Test
+    fun testReplaceName() {
+        val database = Database(InMemoryDriverFactory().createDriver())
+        val collection = DBTaskCollection(database)
+        val task = Task("Task", 5)
+        collection.add(task)
+        collection.replace(task, Task("Task2", 5))
+
+        // Collection handling
+        assertEquals(1, collection.size())
+        val task1 = collection.iterator().next()
+        assertEquals("Task2", task1.name)
+        assertEquals(5, task1.totalDuration)
+
+        // DB persistence
+        val tasks = database.tasksQueries.selectAll().executeAsList()
+        assertEquals(1, tasks.size)
+        assertEquals(PersistentTask(1, "Task2", 5), tasks[0])
     }
 }

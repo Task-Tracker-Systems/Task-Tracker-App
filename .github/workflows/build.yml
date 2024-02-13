@@ -13,6 +13,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  GRADLE_VERSION: 8.2.1
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+
 permissions:
   contents: read
 
@@ -22,14 +27,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: ${{env.JAVA_VERSION}}
+        distribution: ${{env.JAVA_DISTRIBUTION}}
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
+      with:
+        gradle-version: ${{env.GRADLE_VERSION}}
     - name: Set Gradle executable
       run: chmod +x gradlew
     - name: Compile Task-Tracker-Entities
@@ -56,7 +63,86 @@ jobs:
         ln -s ../gradle &&
         ln -s ../gradlew &&
         ./gradlew check assembleDist
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
-        name: distribution
+        name: cli
         path: ./Task-Tracker-CLI/build/distributions/*.zip
+    - uses: actions/upload-artifact@v4
+      with:
+        name: packages
+        path: ~/.m2/repository/app/tasktrackersystems
+
+  build-windows:
+
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: packages
+        path: ~/.m2/repository/app/tasktrackersystems
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{env.JAVA_VERSION}}
+        distribution: ${{env.JAVA_DISTRIBUTION}}
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: ${{env.GRADLE_VERSION}}
+    - name: Compile Task-Tracker-Usecases-GUI
+      run: |
+        cd Task-Tracker-GUI
+        gradle wrapper
+        .\gradlew.bat check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
+    - name: Publish .msi
+      uses: actions/upload-artifact@v4
+      with:
+        name: gui-win
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main/msi/*.msi
+    - name: Publish release .msi
+      uses: actions/upload-artifact@v4
+      with:
+        name: gui-win-release
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main-release/msi/*.msi
+
+  build-ubuntu:
+
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: packages
+        path: ~/.m2/repository/app/tasktrackersystems
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{env.JAVA_VERSION}}
+        distribution: ${{env.JAVA_DISTRIBUTION}}
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: ${{env.GRADLE_VERSION}}
+    - name: Set Gradle executable
+      run: chmod +x gradlew
+    - name: Compile Task-Tracker-Usecases-GUI
+      run: |
+        cd Task-Tracker-GUI &&
+        ln -s ../gradle &&
+        ln -s ../gradlew &&
+        ./gradlew check packageDistributionForCurrentOS packageReleaseDistributionForCurrentOS
+    - name: Publish .deb
+      uses: actions/upload-artifact@v4
+      with:
+        name: gui-deb
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main/deb/*.deb
+    - name: Publish release .deb
+      uses: actions/upload-artifact@v4
+      with:
+        name: gui-deb-release
+        path: ./Task-Tracker-GUI/desktop/build/compose/binaries/main-release/deb/*.deb
