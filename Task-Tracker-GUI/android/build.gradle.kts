@@ -13,14 +13,16 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation("androidx.activity:activity-compose:1.5.0")
+    implementation("app.tasktrackersystems.tasktracker.usecases.sqlite:Task-Tracker-Usecases-SQLite-Impl:1.0-SNAPSHOT")
+    implementation("app.cash.sqldelight:android-driver:2.0.0-rc01")
 }
 
 android {
     compileSdk = 34
     defaultConfig {
         applicationId = "app.tasktrackersystems.tasktracker.android"
-        targetSdk = 34
-        minSdkVersion(34)
+        targetSdk = 33
+        minSdkVersion(33)
         versionCode = 1
         versionName = "1.0-SNAPSHOT"
     }
