@@ -1,8 +1,8 @@
 package app.tasktrackersystems.tasktracker.usecases.tasks
 
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.tasktrackersystems.tasktracker.entities.Task
 import app.tasktrackersystems.tasktracker.usecases.sqlite.Database
-import app.tasktrackersystems.tasktracker.usecases.sqlite.InMemoryDriverFactory
 import app.tasktrackersystems.tasktracker.usecases.sqlite.sqldelight.tasktracker.data.PersistentTask
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -12,15 +12,24 @@ import kotlin.test.assertTrue
 
 class DBTaskCollectionTests {
 
+    private fun createDB(): Database {
+        return Database(
+            JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+                .apply {
+                    Database.Schema.create(this)
+                }
+        )
+    }
+
     @Test
     fun testEmptySize() {
-        val collection = DBTaskCollection(Database(InMemoryDriverFactory().createDriver()))
+        val collection = DBTaskCollection(createDB())
         assertEquals(0, collection.size())
     }
 
     @Test
     fun testAdd() {
-        val database = Database(InMemoryDriverFactory().createDriver())
+        val database = createDB()
         val collection = DBTaskCollection(database)
         collection.add(Task("Task", 5))
 
@@ -38,7 +47,7 @@ class DBTaskCollectionTests {
 
     @Test
     fun testAddMoreItems() {
-        val database = Database(InMemoryDriverFactory().createDriver())
+        val database = createDB()
         val collection = DBTaskCollection(database)
         collection.add(Task("Task2", 20))
         collection.add(Task("Task", 5))
@@ -62,7 +71,7 @@ class DBTaskCollectionTests {
 
     @Test
     fun testIteratorIsRefreshedOnCall() {
-        val database = Database(InMemoryDriverFactory().createDriver())
+        val database = createDB()
         val collection = DBTaskCollection(database)
         collection.add(Task("Task", 5))
         collection.add(Task("Task2", 20))
@@ -83,7 +92,7 @@ class DBTaskCollectionTests {
 
     @Test
     fun testRemove() {
-        val database = Database(InMemoryDriverFactory().createDriver())
+        val database = createDB()
         val collection = DBTaskCollection(database)
         collection.add(Task("Task", 5))
         collection.add(Task("Task2", 20))
@@ -106,7 +115,7 @@ class DBTaskCollectionTests {
 
     @Test
     fun testReplace() {
-        val database = Database(InMemoryDriverFactory().createDriver())
+        val database = createDB()
         val collection = DBTaskCollection(database)
         val task = Task("Task", 5)
         collection.add(task)
@@ -126,7 +135,7 @@ class DBTaskCollectionTests {
 
     @Test
     fun testReplaceName() {
-        val database = Database(InMemoryDriverFactory().createDriver())
+        val database = createDB()
         val collection = DBTaskCollection(database)
         val task = Task("Task", 5)
         collection.add(task)
