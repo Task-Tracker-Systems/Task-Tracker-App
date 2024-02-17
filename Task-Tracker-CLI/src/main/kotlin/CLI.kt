@@ -1,7 +1,9 @@
+
 import app.tasktrackersystems.tasktracker.entities.DuplicateTaskException
 import app.tasktrackersystems.tasktracker.entities.Task
 import app.tasktrackersystems.tasktracker.usecases.UseCases
-import app.tasktrackersystems.tasktracker.usecases.tasks.TaskCollectionReaderFactory
+import app.tasktrackersystems.tasktracker.usecases.sqlite.Database
+import app.tasktrackersystems.tasktracker.usecases.tasks.DBTaskCollectionReader
 import com.github.kinquirer.KInquirer
 import com.github.kinquirer.components.promptConfirm
 import com.github.kinquirer.components.promptInput
@@ -10,7 +12,7 @@ import kotlinx.datetime.Clock
 import kotlin.system.exitProcess
 
 class CLI(
-    private val taskCollectionReaderFactory: TaskCollectionReaderFactory
+    private val database: Database
 ) {
     companion object {
         val back = "Return"
@@ -69,7 +71,7 @@ class CLI(
     fun run() {
         println("Welcome to Task-Tracker-CLI")
         val useCases = UseCases.createUseCasesFromReaders(
-            taskCollectionReaderFactory.create()
+            DBTaskCollectionReader(database)
         )
 
         val choices = mapOf(
