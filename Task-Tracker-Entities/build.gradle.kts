@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform") version "1.8.22"
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("maven-publish")
-    id("org.jetbrains.kotlinx.kover") version "0.7.5"
+    id("org.jetbrains.kotlinx.kover") version "0.7.6"
 }
 
 group = "app.tasktrackersystems.tasktracker.entities"
