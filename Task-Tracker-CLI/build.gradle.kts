@@ -20,7 +20,7 @@ dependencies {
     implementation("app.tasktrackersystems.tasktracker.usecases:Task-Tracker-Usecases:1.0-SNAPSHOT")
     implementation("app.tasktrackersystems.tasktracker.entities:Task-Tracker-Entities:1.0-SNAPSHOT")
     implementation("app.tasktrackersystems.tasktracker.usecases.sqlite:Task-Tracker-Usecases-SQLite-Impl:1.0-SNAPSHOT")
-    implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
+    implementation("app.cash.sqldelight:sqlite-driver:2.0.1")
 }
 
 tasks.test {
