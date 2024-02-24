@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import app.tasktrackersystems.tasktracker.common.Utils.toTimeString
 import app.tasktrackersystems.tasktracker.entities.Task
 import app.tasktrackersystems.tasktracker.usecases.UseCases
 import cafe.adriel.voyager.core.screen.Screen
@@ -84,7 +85,7 @@ data class HomeScreen(val useCases: UseCases) : Screen {
                 Row(
                     Modifier
                         .fillMaxSize()
-                        .padding(5.dp),
+                        .padding(5.dp, 0.dp, 0.dp, 0.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
@@ -92,7 +93,7 @@ data class HomeScreen(val useCases: UseCases) : Screen {
                     Row(
                         Modifier
                             .fillMaxSize()
-                            .padding(5.dp)
+                            .padding(0.dp, 5.dp, 0.dp, 0.dp)
                             .clickable {
                                 navigator.push(TaskScreen(useCases, task))
                             },
@@ -114,7 +115,7 @@ data class HomeScreen(val useCases: UseCases) : Screen {
                             Spacer(Modifier.size(5.dp))
                             Column() {
                                 Text(task.name)
-                                Text("${task.totalDuration} seconds", color = Color.Gray)
+                                Text(task.totalDuration.toTimeString(), color = Color.Gray)
                             }
                         }
                     }
