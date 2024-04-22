@@ -48,7 +48,7 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation("io.mockative:mockative:1.4.1")
+                implementation("io.mockative:mockative:2.2.0")
                 implementation(kotlin("test"))
             }
         }
